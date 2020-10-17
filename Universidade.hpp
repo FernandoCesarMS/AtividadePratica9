@@ -8,10 +8,10 @@
 class Universidade
 {
 private:
-    vector<Professor> professores;
+    vector<Professor *> professores;
 
 public:
-    void addProfessor();
+    void addProfessor(Professor&);
     int totalPago();
     void listaProfessores();
 };
