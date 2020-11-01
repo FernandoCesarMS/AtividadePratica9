@@ -6,7 +6,18 @@ class Funcao
 {
 public:
     //funcao que obtem a integral da funcao pela regra do trapezio
-    virtual double getIntegral(double limiteInferior, double limiteSuperior, double intervalos) = 0;
+    double getIntegral(double limiteInferior, double limiteSuperior, double intervalos){
+        double soma = 0;
+        double cond = (limiteSuperior-limiteInferior)/intervalos;
+        double x0 = limiteInferior;
+        double x = limiteInferior + cond;
+        for (int i = 0; i< intervalos; i++){
+            soma = soma + ((func(x0)+func(x)) * (cond/2));
+            x0 = x;
+            x = x + cond;
+        }
+        return soma;
+    }
 
     // funcao virtual representando a funcao cuja integral deve ser calculada
     virtual double func(double input) = 0;
@@ -21,9 +32,19 @@ private:
     double a, b, c;
 
 public:
-    Quadratica(double A, double B, double C);
+    Quadratica(double A, double B, double C){
+        a = A;
+        b = B;
+        c = C;
+    }
     double getIntegral(double limiteInferior, double limiteSuperior, double intervalos);
-    double func(double input);
+    double func(double input){
+        double p1,p2,p3;
+        p1 = a * input * input;
+        p2 = b * input;
+        p3 = c;
+        return a + b + c;
+    }
 };
 class Senoide : public Funcao
 {
