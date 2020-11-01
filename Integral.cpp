@@ -6,15 +6,14 @@ class Funcao
 {
 public:
     //funcao que obtem a integral da funcao pela regra do trapezio
-    double getIntegral(double limiteInferior, double limiteSuperior, double intervalos){
-        double soma = 0;
-        double cond = (limiteSuperior-limiteInferior)/intervalos;
-        double x0 = limiteInferior;
-        double x = limiteInferior + cond;
-        for (int i = 0; i< intervalos; i++){
-            soma = soma + ((func(x0)+func(x)) * (cond/2));
-            x0 = x;
-            x = x + cond;
+    double getIntegral(double limiteInferior, double limiteSuperior, double intervalos)
+    {
+        double soma = 0, h = (limiteSuperior - limiteInferior) / intervalos;
+        double baseInferior = limiteInferior, baseSuperior = baseInferior + h;
+        for (int i = 0; i < intervalos; i++){
+            soma += ((func(baseInferior) + func(baseSuperior)) *h/2);
+            baseInferior = baseSuperior;
+            baseSuperior = baseInferior + h;
         }
         return soma;
     }
@@ -32,14 +31,16 @@ private:
     double a, b, c;
 
 public:
-    Quadratica(double A, double B, double C){
+    Quadratica(double A, double B, double C)
+    {
         a = A;
         b = B;
         c = C;
     }
     double getIntegral(double limiteInferior, double limiteSuperior, double intervalos);
-    double func(double input){
-        double p1,p2,p3;
+    double func(double input)
+    {
+        double p1, p2, p3;
         p1 = a * input * input;
         p2 = b * input;
         p3 = c;
@@ -49,12 +50,13 @@ public:
 class Senoide : public Funcao
 {
 public:
-    Senoide();
+    Senoide(){};
     double getIntegral(double limiteInferior, double limiteSuperior, double intervalos);
-    double func(double input){
+    double func(double input)
+    {
         double p1 = sin(input);
         double p2 = input;
-        return p1/p2;
+        return p1 / p2;
     }
 };
 class Linear : public Funcao
@@ -63,9 +65,17 @@ private:
     double a, b;
 
 public:
-    Linear(double A,double B);
+    Linear(double A, double B){
+        a = A;
+        b = B;
+    }
     double getIntegral(double limiteInferior, double limiteSuperior, double intervalos);
-    double func(double input);
+    double func(double input)
+    {
+        double p1 = a * input;
+        double p2 = b;
+        return p1 + p2;
+    }
 };
 
 int main()
